@@ -4,7 +4,8 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import fileinput
+import glob
 
 def pregunta_10():
     """
@@ -20,3 +21,21 @@ def pregunta_10():
 
 
     """
+
+     # Leer archivo
+    sequence = []
+    files = glob.glob("files/input/data.csv")
+    with fileinput.input(files=files) as f:
+        for line in f:
+            sequence.append((fileinput.filename(), line.strip()))
+
+    resultado = []
+    for _, value in sequence:
+        columna = value.split("\t")
+        valor = columna[0]
+        valores2 = len(columna[3].split(","))  
+        valores3 = len(columna[4].split(","))
+        resultado.append((valor, valores2, valores3))
+    return resultado
+# pregunta_10()
+        

@@ -4,7 +4,8 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import fileinput
+import glob
 
 def pregunta_08():
     """
@@ -27,3 +28,23 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+    # Leer archivo
+    sequence = []
+    files = glob.glob("files/input/data.csv")
+    with fileinput.input(files=files) as f:
+        for line in f:
+            sequence.append((fileinput.filename(), line.strip()))
+
+    diccionario = {}
+    for _, value in sequence:
+        columna = value.split("\t")
+        valor = int(columna[1])
+        if valor not in diccionario.keys():
+            diccionario[valor] = []
+        diccionario[valor].append(columna[0])
+    for key in diccionario.keys():
+        diccionario[key] = sorted(list(set(diccionario[key])))
+    resultado = sorted(diccionario.items())
+
+    return resultado
+print(pregunta_08())
